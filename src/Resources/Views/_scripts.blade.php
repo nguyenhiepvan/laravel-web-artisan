@@ -95,7 +95,7 @@
     function sendAuth(username, password) {
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == XMLHttpRequest.DONE) {
+            if (xhttp.readyState==4 && xhttp.status==200) {
                 document.getElementById('webartisan__window__loading_auth').style.display = "none";
                 document.getElementById('webartisan__window__input_command_username').value = "";
                 document.getElementById('webartisan__window__input_command_password').value = "";
@@ -122,7 +122,7 @@
     function sendLogout() {
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == XMLHttpRequest.DONE) {
+            if (xhttp.readyState==4 && xhttp.status==200) {
                 document.getElementById('webartisan__window__loading_auth').style.display = "none";
                 document.getElementById('webartisan__window__command_username').style.display = "flex";
                 document.getElementById('webartisan__window__results').innerHTML = "";
@@ -142,7 +142,7 @@
     function sendCommand(command) {
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == XMLHttpRequest.DONE) {
+            if (xhttp.readyState==4 && xhttp.status==200) {
                 document.getElementById('webartisan__window__loading').style.display = "none";
                 document.getElementById('webartisan__window__results').innerHTML = xhttp.responseText;
                 webartisan_window.scrollTop = webartisan_window.scrollHeight;
