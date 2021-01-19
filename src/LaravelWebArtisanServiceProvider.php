@@ -24,7 +24,7 @@ class LaravelWebArtisanServiceProvider extends ServiceProvider
             'namespace'  => 'Micheledamo\LaravelWebArtisan\Controllers',
             'prefix'     => $this->app['config']->get('webartisan.route_prefix'),
             'domain'     => $this->app['config']->get('webartisan.route_domain'),
-            'middleware' => ['web']
+            'middleware' => 'web'
         ];
 
         $this->getRouter()->group($routeConfig, function ($router) {
