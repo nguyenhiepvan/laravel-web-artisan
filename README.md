@@ -16,9 +16,19 @@ This package allows you to execute Artisan commands in a simple way using the br
 Require this package with Composer on your Laravel project.
 
 ``` bash
-$ composer require nguyenhiep/laravel-web-artisan
+$composer require nguyenhiep/laravel-web-artisan
 ```
 Laravel uses Package Auto-Discovery, so you don't need to manually add the ServiceProvider.
+
+Adding this to `$middleware` into `Kernel.php`
+
+```phpt
+protected $middleware = [
+        //...
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+];
+```
 
 The Web Artisan window will be enabled when WEBARTISAN_ENABLED is true, on your .env project file.     
 The following line must be added in the .env file of your Laravel project to enable the Web Artisan window, otherwise it is disabled by default.
