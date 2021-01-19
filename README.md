@@ -16,7 +16,7 @@ This package allows you to execute Artisan commands in a simple way using the br
 Require this package with Composer on your Laravel project.
 
 ``` bash
-$ composer require micheledamo/laravel-web-artisan
+$ composer require nguyenhiep/laravel-web-artisan
 ```
 Laravel uses Package Auto-Discovery, so you don't need to manually add the ServiceProvider.
 

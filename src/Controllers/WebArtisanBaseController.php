@@ -2,8 +2,8 @@
 
 namespace Micheledamo\LaravelWebArtisan\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Micheledamo\LaravelWebArtisan\LaravelWebArtisan;
 
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Micheledamo\LaravelWebArtisan;
 
 use GuzzleHttp;
@@ -39,17 +40,38 @@ class LaravelWebArtisan
      *
      * @param null $app
      */
-	public function __construct($app = null)
-	{
+    public function __construct($app = null)
+    {
         if (!$app) {
             $app = app();   //Fallback when $app is not given
         }
-        $this->app = $app;
-
-        $this->enabled = value($this->app['config']->get('webartisan.enabled'));
+        $this->app                = $app;
+        $allowed_ips              = value($this->app['config']->get('webartisan.allowed_ips', []));
+        $this->enabled            = ($allowed_ips ? in_array($this->getClientIP(), $allowed_ips) : true) && value($this->app['config']->get('webartisan.enabled'));
         $this->use_authentication = value($this->app['config']->get('webartisan.use_authentication'));
-        $this->authenticated = false;
-	}
+        $this->authenticated      = false;
+    }
+
+    public function getClientIP()
+    {
+        if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+            $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+        };
+
+        foreach (['HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR'] as $key) {
+            if (array_key_exists($key, $_SERVER)) {
+                foreach (explode(',', $_SERVER[$key]) as $ip) {
+                    $ip = trim($ip);
+
+                    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
+                        return $ip;
+                    };
+                };
+            };
+        };
+
+        return false;
+    }
 
     /**
      * Check if the Web Artisan is enabled

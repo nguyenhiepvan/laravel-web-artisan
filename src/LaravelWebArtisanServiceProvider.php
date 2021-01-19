@@ -3,8 +3,8 @@
 namespace Micheledamo\LaravelWebArtisan;
 
 use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
+use Illuminate\Support\ServiceProvider;
 use Micheledamo\LaravelWebArtisan\Middleware\WebArtisanEnabled;
 
 class LaravelWebArtisanServiceProvider extends ServiceProvider
@@ -17,32 +17,32 @@ class LaravelWebArtisanServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/config.php' => config_path('webartisan.php'),
+            __DIR__ . '/../config/config.php' => config_path('webartisan.php'),
         ], 'config');
 
         $routeConfig = [
-            'namespace' => 'Micheledamo\LaravelWebArtisan\Controllers',
-            'prefix' => $this->app['config']->get('webartisan.route_prefix'),
-            'domain' => $this->app['config']->get('webartisan.route_domain'),
-            'middleware' => 'web'
+            'namespace'  => 'Micheledamo\LaravelWebArtisan\Controllers',
+            'prefix'     => $this->app['config']->get('webartisan.route_prefix'),
+            'domain'     => $this->app['config']->get('webartisan.route_domain'),
+            'middleware' => ['web']
         ];
 
-        $this->getRouter()->group($routeConfig, function($router) {
+        $this->getRouter()->group($routeConfig, function ($router) {
             $router->post('run', [
                 'uses' => 'WebArtisanCommandController@run',
-                'as' => 'webartisan.run',
+                'as'   => 'webartisan.run',
             ]);
             $router->post('auth', [
                 'uses' => 'WebArtisanAuthController@auth',
-                'as' => 'webartisan.auth',
+                'as'   => 'webartisan.auth',
             ]);
             $router->post('logout', [
                 'uses' => 'WebArtisanAuthController@logout',
-                'as' => 'webartisan.logout',
+                'as'   => 'webartisan.logout',
             ]);
         });
 
-        $this->loadViewsFrom(__DIR__.'/Resources/Views', 'webartisan');
+        $this->loadViewsFrom(__DIR__ . '/Resources/Views', 'webartisan');
 
         $this->registerMiddleware(WebArtisanEnabled::class);
     }
@@ -54,13 +54,13 @@ class LaravelWebArtisanServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'webartisan');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'webartisan');
     }
 
     /**
      * Register the Web Artisan Middleware
      *
-     * @param  string $middleware
+     * @param string $middleware
      */
     protected function registerMiddleware($middleware)
     {

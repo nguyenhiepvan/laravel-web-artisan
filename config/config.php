@@ -14,7 +14,15 @@ return [
      |
      */
 
-    'enabled' => env('WEBARTISAN_ENABLED', false),
+    'enabled'      => env('WEBARTISAN_ENABLED', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | user's ips was allowed using web artisan
+    |--------------------------------------------------------------------------
+    |
+    */
+    'allowed_ips'  => explode(",", env('WEBARTISAN_ALLOWED_IPS')),
 
     /*
      |--------------------------------------------------------------------------

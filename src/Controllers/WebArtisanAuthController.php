@@ -38,16 +38,15 @@ class WebArtisanAuthController extends WebArtisanBaseController
             ? $request->get('password')
             : null;
 
-        if($this->username and $this->password) {
+        if ($this->username and $this->password) {
             $authenticated = true;
-            if($this->username != config('webartisan.auth.username')) $authenticated = false;
-            if($this->password != config('webartisan.auth.password')) $authenticated = false;
+            if ($this->username != config('webartisan.auth.username')) $authenticated = false;
+            if ($this->password != config('webartisan.auth.password')) $authenticated = false;
 
-            if($authenticated) {
+            if ($authenticated) {
                 $request->session()->put('webartisan__authenticated', true);
                 return $this->prepareResultToHtml("Welcome", 'success');
-            }
-            else return $this->prepareResultToHtml("Oops, it looks like we don't know each other.", 'error');
+            } else return $this->prepareResultToHtml("Oops, it looks like we don't know each other.", 'error');
         }
         return $this->prepareResultToHtml("Username and Password cannot be empty.", 'error');
     }
@@ -82,8 +81,16 @@ class WebArtisanAuthController extends WebArtisanBaseController
                         $string))));
 
         switch ($type) {
-            case "error": { $string = '<span class="webartisan__window__results__error">' . $string . '</span>'; }break;
-            case "success": { $string = '<span class="webartisan__window__results__success">' . $string . '</span>'; }break;
+            case "error":
+                {
+                    $string = '<span class="webartisan__window__results__error">' . $string . '</span>';
+                }
+                break;
+            case "success":
+                {
+                    $string = '<span class="webartisan__window__results__success">' . $string . '</span>';
+                }
+                break;
         }
 
         return $string;

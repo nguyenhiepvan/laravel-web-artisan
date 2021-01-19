@@ -19,7 +19,7 @@ class WebArtisanEnabled
     /**
      * Create a new middleware instance.
      *
-     * @param  LaravelWebArtisan $webartisan
+     * @param LaravelWebArtisan $webartisan
      */
     public function __construct(LaravelWebArtisan $webartisan)
     {
@@ -36,15 +36,14 @@ class WebArtisanEnabled
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        if ($response instanceof Response and $this->webartisan->isEnabled() and $request->url() != asset(config('webartisan.route_prefix').'/run')) {
+        if ($response instanceof Response and $this->webartisan->isEnabled() and $request->url() != asset(config('webartisan.route_prefix') . '/run')) {
             try {
                 $response->getContent();
-            }
-            catch (\ErrorException $e) {
+            } catch (\ErrorException $e) {
                 return $response;
             }
 
-            if(!$this->webartisan->useAuthentication()
+            if (!$this->webartisan->useAuthentication()
                 or ($this->webartisan->useAuthentication()
                     and $request->session()->has('webartisan__authenticated'))) {
 
